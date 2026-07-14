@@ -108,8 +108,9 @@ export default function JobSearch({ jobs, onAddJob, onTailorJob, onNavigateToQue
   };
 
   // Handle scoring and tailoring manual inputs
-  const handleScoreAndTailor = async (e: React.FormEvent) => {
+  const handleScoreAndTailor = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     setFormError('');
     setGeneratedJob(null);
 
@@ -199,7 +200,7 @@ export default function JobSearch({ jobs, onAddJob, onTailorJob, onNavigateToQue
       setManualLocation('Redwood City, CA (On-site)');
       setManualSource('Greenhouse');
       setManualUrl('https://boards.greenhouse.io/impossiblefoods/jobs/52718301');
-      setManualDescription(`We are looking for an Associate Food Technologist to join our Quality Assurance group. You will run daily physical and sensory QA controls on meat-alternative products, maintain food safety standards, and execute product validations.
+      setManualDescription(`We are looking for an Associate Food Technologist to join our Quality Assurance group. You will run daily physical and sensory QA controls on meat-alternative products.
 
 Requirements:
 - Bachelor's degree in Food Science, Biochemistry, or related discipline.
@@ -211,7 +212,7 @@ Requirements:
       setManualLocation('East Hanover, NJ');
       setManualSource('Lever');
       setManualUrl('https://jobs.lever.co/givaudan/392-12-8');
-      setManualDescription(`Givaudan is seeking a Sensory Technician to coordinate and execute consumer flavor evaluations. You will prepare sensory samples, maintain testing databases, run standard panel testing protocols, and perform statistical analysis (ANOVA).
+      setManualDescription(`Givaudan is seeking a Sensory Technician to coordinate and execute consumer flavor evaluations. You will prepare sensory samples, maintain testing databases, run stand-ins for trained panelists.
 
 Qualifications:
 - BS in Food Science or Sensory Evaluation studies.
@@ -233,12 +234,14 @@ Qualifications:
           
           <div className="flex space-x-2">
             <button 
+              type="button"
               onClick={() => handleLoadMockPosting('Greenhouse')}
               className="px-2.5 py-1 bg-teal-50 text-teal-700 hover:bg-teal-100 text-[10px] font-bold rounded-2xl border border-teal-200 cursor-pointer"
             >
               + Impossible Foods
             </button>
             <button 
+              type="button"
               onClick={() => handleLoadMockPosting('Lever')}
               className="px-2.5 py-1 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-[10px] font-bold rounded-2xl border border-indigo-200 cursor-pointer"
             >
@@ -332,7 +335,7 @@ Qualifications:
           <button
             type="submit"
             disabled={isProcessing}
-            className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-xs"
+            className="w-full py-3 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white font-bold rounded-2xl text-xs flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-xs"
           >
             {isProcessing ? (
               <>
@@ -354,7 +357,7 @@ Qualifications:
         
         {/* Scraper Scanner CLI Loader */}
         {isScanning && (
-          <div className="bg-slate-950 p-5 rounded-3xl border border-slate-800 text-green-400 font-mono text-[11px] space-y-4 shadow-xl h-80 flex flex-col overflow-hidden animate-fade-in" id="scanner-cli-loader">
+          <div className="bg-slate-950 p-5 rounded-3xl border border-slate-800 text-green-400 font-mono text-[11px] space-y-4 shadow-xl h-80 flex flex-col overflow-hidden animate-fade-in" id="scanner-output">
             <div className="flex items-center space-x-2 border-b border-slate-800 pb-3">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
               <span className="font-bold text-slate-300">Live Job Search Active</span>
@@ -415,6 +418,7 @@ Qualifications:
 
             <div className="pt-2">
               <button
+                type="button"
                 onClick={onNavigateToQueue}
                 className="w-full py-2.5 bg-slate-900 hover:bg-black text-white font-bold rounded-2xl text-xs flex items-center justify-center space-x-2 transition-colors cursor-pointer"
               >
@@ -446,9 +450,10 @@ Qualifications:
             </p>
 
             <button
+              type="button"
               onClick={handleAutoScan}
               disabled={isScanning}
-              className="w-full py-3 bg-slate-900 hover:bg-black text-white font-bold rounded-2xl text-xs flex items-center justify-center space-x-2 cursor-pointer transition-all border border-slate-950 hover:shadow-md"
+              className="w-full py-3 bg-slate-900 hover:bg-black disabled:opacity-60 text-white font-bold rounded-2xl text-xs flex items-center justify-center space-x-2 cursor-pointer transition-all"
             >
               <Sparkles className="w-4 h-4 text-teal-400" />
               <span>Search Live Jobs Now</span>
@@ -497,9 +502,10 @@ Qualifications:
 
                     <div className="flex space-x-2 pt-1.5 border-t border-slate-200/60">
                       <button
+                        type="button"
                         onClick={() => handleTailorDiscoveredJob(job.id)}
                         disabled={activeTailoringId === job.id}
-                        className="flex-1 py-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-[10px] flex items-center justify-center space-x-1 cursor-pointer"
+                        className="flex-1 py-1.5 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white font-bold rounded-xl text-[10px] flex items-center justify-center space-x-1 cursor-pointer"
                       >
                         {activeTailoringId === job.id ? (
                           <>
@@ -514,6 +520,7 @@ Qualifications:
                         )}
                       </button>
                       <button
+                        type="button"
                         onClick={() => handleDeleteDiscoveredJob(job.id)}
                         className="px-2.5 py-1.5 border border-slate-200 text-slate-500 hover:bg-rose-50 hover:text-rose-600 font-bold rounded-xl text-[10px] cursor-pointer"
                       >
