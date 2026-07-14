@@ -1,0 +1,6 @@
+{
+  "name": "FoodSci Apply",
+  "description": "Autonomous Job Application Agent for entry-level Food Science graduates to tailor resumes, draft cover letters, and track applications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

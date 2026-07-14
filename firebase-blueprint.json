@@ -1,0 +1,91 @@
+{
+  "entities": {
+    "profile": {
+      "title": "UserProfile",
+      "description": "User professional contact details and educational history",
+      "type": "object",
+      "properties": {
+        "contact": {
+          "type": "object",
+          "description": "User basic contact info"
+        },
+        "education": {
+          "type": "object",
+          "description": "User academic degrees"
+        },
+        "workHistory": {
+          "type": "array",
+          "description": "Previous roles and bullets"
+        },
+        "skills": {
+          "type": "array",
+          "description": "List of core competencies"
+        },
+        "certifications": {
+          "type": "array",
+          "description": "Professional certifications"
+        },
+        "preferences": {
+          "type": "object",
+          "description": "Job search preferences"
+        },
+        "standardAnswers": {
+          "type": "object",
+          "description": "Pre-crafted answers to common application questions"
+        }
+      }
+    },
+    "job": {
+      "title": "Job",
+      "description": "An tracked job application and its tailored assets",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "company": { "type": "string" },
+        "location": { "type": "string" },
+        "description": { "type": "string" },
+        "source": { "type": "string" },
+        "url": { "type": "string" },
+        "fitScore": { "type": "number" },
+        "fitRationale": { "type": "string" },
+        "qualificationsGap": { "type": "array" },
+        "tailoredCV": { "type": "object" },
+        "tailoredCoverLetter": { "type": "string" },
+        "prefilledAnswers": { "type": "array" },
+        "status": { "type": "string" },
+        "skipReason": { "type": "string" },
+        "screenshotUrl": { "type": "string" },
+        "submissionDate": { "type": "string" },
+        "notes": { "type": "string" },
+        "refId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "company", "status", "createdAt"]
+    },
+    "config": {
+      "title": "AppConfig",
+      "description": "Application settings and thresholds",
+      "type": "object",
+      "properties": {
+        "threshold": { "type": "number" },
+        "keywords": { "type": "array" },
+        "linkedinToggle": { "type": "boolean" }
+      }
+    }
+  },
+  "firestore": {
+    "/profile/user": {
+      "schema": "profile",
+      "description": "Active user candidate profile"
+    },
+    "/jobs/{jobId}": {
+      "schema": "job",
+      "description": "List of tracked job applications"
+    },
+    "/config/settings": {
+      "schema": "config",
+      "description": "Application behavior configuration"
+    }
+  }
+}
