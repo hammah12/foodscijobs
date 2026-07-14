@@ -126,7 +126,10 @@ ${editedAnswers.map(ans => `Q: ${ans.question}\nA: ${ans.answer}\n`).join('\n---
       setSubmissionRefId('');
       setSubmissionNotes('');
     }
-  }, [selectedJobId, selectedJob]);
+    // Depend on the job ID only: the job OBJECT gets a new identity every time the
+    // jobs list refreshes (e.g. right after saving drafts), and resetting on that
+    // would instantly close the Apply Assistant after it opens.
+  }, [selectedJobId]);
 
   if (pendingJobs.length === 0) {
     return (
